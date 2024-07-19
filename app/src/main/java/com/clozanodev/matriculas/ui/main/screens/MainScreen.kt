@@ -1,4 +1,4 @@
-package com.clozanodev.matriculas.ui.theme.main.screens
+package com.clozanodev.matriculas.ui.main.screens
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel

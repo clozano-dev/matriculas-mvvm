@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.clozanodev.matriculas.ui.theme.MatriculasTheme
-import com.clozanodev.matriculas.ui.theme.main.ui.NavGraph
+import com.clozanodev.matriculas.ui.main.ui.NavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

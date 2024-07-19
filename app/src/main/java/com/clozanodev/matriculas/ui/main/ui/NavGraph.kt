@@ -1,10 +1,10 @@
-package com.clozanodev.matriculas.ui.theme.main.ui
+package com.clozanodev.matriculas.ui.main.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.clozanodev.matriculas.ui.theme.main.screens.MainScreen
+import com.clozanodev.matriculas.ui.main.screens.MainScreen
 
 @Composable
 fun NavGraph(startDestination: String = "main"){
