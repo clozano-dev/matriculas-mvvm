@@ -6,7 +6,7 @@ import kotlinx.coroutines.tasks.await
 
 class LicensePlateApi(private val firestore: FirebaseFirestore) {
 
-    private val platesCollection = firestore.collection("plates")
+    private val platesCollection = firestore.collection("licensePlates")
 
     suspend fun getPlate(id: Int): LicensePlate? {
         val document = platesCollection.document(id.toString()).get().await()
