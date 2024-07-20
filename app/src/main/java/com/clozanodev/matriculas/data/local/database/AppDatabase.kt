@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.clozanodev.matriculas.data.local.dao.UserStatsDao
 import com.clozanodev.matriculas.data.local.entities.UserStats
 
-@Database(entities = [UserStats::class], version = 1)
+@Database(entities = [UserStats::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userStatsDao(): UserStatsDao
 }

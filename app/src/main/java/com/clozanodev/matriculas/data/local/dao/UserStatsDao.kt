@@ -9,7 +9,7 @@ import com.clozanodev.matriculas.data.local.entities.UserStats
 @Dao
 interface UserStatsDao {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserStats(userStats: UserStats)
 
     @Query("SELECT * FROM user_stats WHERE username = :username")
