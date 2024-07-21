@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clozanodev.matriculas.data.local.entities.UserStats
 import com.clozanodev.matriculas.data.remote.entities.LicensePlate
-import com.clozanodev.matriculas.data.repository.PlateRepository
+import com.clozanodev.matriculas.repository.PlateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
