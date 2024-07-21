@@ -1,4 +1,4 @@
-package com.clozanodev.matriculas.data.repository
+package com.clozanodev.matriculas.repository
 
 import com.clozanodev.matriculas.data.local.dao.UserStatsDao
 import com.clozanodev.matriculas.data.local.entities.UserStats
