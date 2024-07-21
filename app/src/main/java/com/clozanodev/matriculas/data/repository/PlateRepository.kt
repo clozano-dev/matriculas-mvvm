@@ -11,7 +11,7 @@ class PlateRepository @Inject constructor(
     private val userStatsDao: UserStatsDao
 ) {
     suspend fun insertUserStats(userStats: UserStats) = userStatsDao.insertUserStats(userStats)
-    suspend fun getUserStats(username: String) = userStatsDao.getUserStats(username)
+    suspend fun getUserStats() = userStatsDao.getUserStats()
 
     suspend fun getLicensePlate(id: Int): LicensePlate? = licensePlateApi.getPlate(id)
     suspend fun getAllLicensePlates(): List<LicensePlate> = licensePlateApi.getAllPlates()

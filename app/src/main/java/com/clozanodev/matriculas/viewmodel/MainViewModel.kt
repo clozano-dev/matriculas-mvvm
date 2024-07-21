@@ -24,6 +24,9 @@ class MainViewModel @Inject constructor(
     private val _insertStatus = MutableStateFlow<String?>(null)
     val insertStatus: StateFlow<String?> get() = _insertStatus
 
+    private val _userStats = MutableStateFlow<UserStats?>(null)
+    val userStats: StateFlow<UserStats?> get() = _userStats
+
     private val _licensePlate = MutableStateFlow<LicensePlate?>(null)
     val licensePlate: StateFlow<LicensePlate?> get() = _licensePlate
 
@@ -39,7 +42,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    // Obtiene una matrícula desde la base de datos remota usando su ID
+    fun getUserStats() {
+        viewModelScope.launch {
+            try {
+                val stats = repository.getUserStats()
+                _userStats.value = stats
+            } catch (e: Exception) {
+                _insertStatus.value = e.message
+            }
+        }
+    }
+
     fun getLicensePlate(id: Int) {
         viewModelScope.launch {
             try {

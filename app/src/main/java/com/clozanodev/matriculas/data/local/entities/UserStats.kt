@@ -5,12 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "user_stats")
 data class UserStats(
-    @PrimaryKey val username: String,
+    @PrimaryKey val id: Int = 1,
     val maxScore: Int,
     val totalGold: Int,
     val totalSilver: Int,
     val totalBronze: Int,
     val totalDaysPlayed: Int,
     val maxConsecutiveGold: Int,
-    val currentConsecutiveGold: Int
+    val currentConsecutiveGold: Int,
+    val lastDayResult: String
 )
