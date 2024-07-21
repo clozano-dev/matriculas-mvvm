@@ -28,14 +28,14 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
     ){
         Button(onClick = {
             val userStats = UserStats(
-                username = "test_user",
                 maxScore = 100,
                 totalGold = 10,
                 totalSilver = 5,
                 totalBronze = 3,
                 totalDaysPlayed = 20,
                 maxConsecutiveGold = 7,
-                currentConsecutiveGold = 2
+                currentConsecutiveGold = 2,
+                lastDayResult = "Gold"
             )
             viewModel.insertUserStats(userStats)
         }) {
