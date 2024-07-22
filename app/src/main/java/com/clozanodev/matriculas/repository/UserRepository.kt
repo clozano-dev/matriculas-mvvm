@@ -10,8 +10,11 @@ class UserRepository @Inject constructor(
     suspend fun insertUserStats(userStats: UserStats) {
         userStatsDao.insertUserStats(userStats)
     }
-    suspend fun getUserStats(username: String): UserStats? {
+    suspend fun getUserStats(): UserStats? {
         return userStatsDao.getUserStats()
+    }
+    suspend fun updateUserStats(userStats: UserStats) {
+        userStatsDao.updateUserStats(userStats)
     }
 
 }
