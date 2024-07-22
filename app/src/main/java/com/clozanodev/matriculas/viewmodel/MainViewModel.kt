@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clozanodev.matriculas.data.local.entities.UserStats
 import com.clozanodev.matriculas.data.remote.entities.LicensePlate
+import com.clozanodev.matriculas.game.GameLogic
 import com.clozanodev.matriculas.repository.PlateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,21 @@ class MainViewModel @Inject constructor(
 
     private val _licensePlate = MutableStateFlow<LicensePlate?>(null)
     val licensePlate: StateFlow<LicensePlate?> get() = _licensePlate
+
+    private val _realTimeScore = MutableStateFlow(0)
+    val realTimeScore: StateFlow<Int> get() = _realTimeScore
+
+    private val _totalScore = MutableStateFlow(0)
+    val totalScore: StateFlow<Int> get() = _totalScore
+
+    private val _medal = MutableStateFlow("")
+    val medal: StateFlow<String> get() = _medal
+
+    private val _submittedWords = mutableListOf<Int>()
+
+    init {
+        getUserStats()
+    }
 
     fun insertUserStats(userStats: UserStats) {
         viewModelScope.launch {
@@ -62,4 +78,28 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun calculateRealTimeScore(word: String) {
+        val currentLicensePlate = licensePlate.value?.plate ?: return
+        _realTimeScore.value = GameLogic.calculateScore(currentLicensePlate, word)
+    }
+
+    fun submitWord(word: String) {
+        val currentLicensePlate = licensePlate.value?.plate ?: return
+        val score = GameLogic.calculateScore(currentLicensePlate, word)
+        _submittedWords.add(score)
+
+        if (_submittedWords.size == 3) {
+            _totalScore.value += _submittedWords.sum()
+            _medal.value = GameLogic.getMedal(_totalScore.value)
+        }
+    }
+
+    fun resetGame(){
+        _realTimeScore.value = 0
+        _submittedWords.clear()
+        _totalScore.value = 0
+        _medal.value = ""
+    }
+
 }

@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.clozanodev.matriculas.data.local.database.AppDatabase
 import com.clozanodev.matriculas.data.local.entities.UserStats
+import com.clozanodev.matriculas.game.GameLogic.calculateScore
+import com.clozanodev.matriculas.game.checkOrder
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,5 +40,8 @@ class MatriculasApp: Application() {
             )
             db.userStatsDao().insertUserStats(defaultUserStats)
         }
+
+
     }
+
 }
