@@ -8,16 +8,19 @@ import com.clozanodev.matriculas.data.remote.entities.LicensePlate
 import com.clozanodev.matriculas.game.GameLogic
 import com.clozanodev.matriculas.repository.PlateRepository
 import com.clozanodev.matriculas.repository.UserRepository
+import com.clozanodev.matriculas.repository.WordRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val plateRepository: PlateRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val wordRepository: WordRepository
 ) : ViewModel() {
 
     private val _insertStatus = MutableStateFlow<String?>(null)
@@ -91,6 +94,10 @@ class MainViewModel @Inject constructor(
     fun calculateRealTimeScore(word: String) {
         val currentLicensePlate = licensePlate.value?.plate ?: return
         _realTimeScore.value = GameLogic.calculateScore(currentLicensePlate, word)
+    }
+
+    fun verifyWord(word: String): Boolean {
+        return wordRepository.isWordValid(word)
     }
 
     fun submitWord(word: String) {

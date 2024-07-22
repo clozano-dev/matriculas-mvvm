@@ -1,5 +1,6 @@
 package com.clozanodev.matriculas.ui.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +34,8 @@ import com.clozanodev.matriculas.viewmodel.MainViewModel
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
+    val context = LocalContext.current
+
     val licensePlate by viewModel.licensePlate.collectAsState()
     val realTimeScore by viewModel.realTimeScore.collectAsState()
     val totalScore by viewModel.totalScore.collectAsState()
@@ -62,7 +66,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         TextField(
             value = word,
             onValueChange = { input ->
-                if (input.all {it.isLetter()}){
+                if (input.all { it.isLetter() }) {
                     word = input.uppercase()
                 }
             },
@@ -90,18 +94,22 @@ fun HomeScreen(viewModel: MainViewModel) {
 
         Button(
             onClick = {
-                viewModel.submitWord(word)
-                word = ""
-                wordsSubmitted +=1
+                if (viewModel.verifyWord(word)) {
+                    viewModel.submitWord(word)
+                    word = ""
+                    wordsSubmitted += 1
+                } else {
+                    Toast.makeText(context, "La palabra no existe en el diccionario", Toast.LENGTH_SHORT).show()
+                }
             }
-        ){
+        ) {
             Text(stringResource(R.string.submit_word))
         }
 
         Text(text = stringResource(R.string.total_score, totalScore))
         Text(text = stringResource(R.string.medal, medal))
 
-        if (wordsSubmitted == 3){
+        if (wordsSubmitted == 3) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
