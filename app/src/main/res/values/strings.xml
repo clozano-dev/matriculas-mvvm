@@ -8,4 +8,15 @@
     <string name="total_score">Puntuación total: %1$s</string>
     <string name="medal">Medalla: %1$s</string>
     <string name="score">Puntuación: %1$s</string>
+
+    <string name="total_days_played">Días totales jugados: %1$d</string>
+    <string name="gold_days">Días oro: %1$d</string>
+    <string name="silver_days">Días plata: %1$d</string>
+    <string name="bronze_days">Días bronce: %1$d</string>
+    <string name="highest_score">Máxima puntuación: %1$d</string>
+    <string name="current_consecutive_gold">Días oro consecutivos actuales: %1$d</string>
+    <string name="max_consecutive_gold">Maxímo de días oro consecutivos: %1$d</string>
+    <string name="statistics_title">Estadísticas</string>
+
+
 </resources>

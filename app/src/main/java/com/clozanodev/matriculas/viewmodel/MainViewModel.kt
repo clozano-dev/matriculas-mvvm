@@ -1,16 +1,13 @@
 package com.clozanodev.matriculas.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clozanodev.matriculas.data.local.entities.UserStats
 import com.clozanodev.matriculas.data.remote.entities.LicensePlate
 import com.clozanodev.matriculas.game.GameLogic
 import com.clozanodev.matriculas.repository.PlateRepository
+import com.clozanodev.matriculas.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: PlateRepository
+    private val plateRepository: PlateRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _insertStatus = MutableStateFlow<String?>(null)
@@ -49,7 +47,7 @@ class MainViewModel @Inject constructor(
     fun insertUserStats(userStats: UserStats) {
         viewModelScope.launch {
             try {
-                repository.insertUserStats(userStats)
+                userRepository.insertUserStats(userStats)
                 _insertStatus.value = "User stats inserted successfully"
                 Log.d("MainViewModel", "User stats inserted successfully")
             } catch (e: Exception) {
@@ -61,7 +59,18 @@ class MainViewModel @Inject constructor(
     fun getUserStats() {
         viewModelScope.launch {
             try {
-                val stats = repository.getUserStats()
+                val stats = userRepository.getUserStats()
+                _userStats.value = stats
+            } catch (e: Exception) {
+                _insertStatus.value = e.message
+            }
+        }
+    }
+
+    fun refreshUserStats() {
+        viewModelScope.launch {
+            try {
+                val stats = userRepository.getUserStats()
                 _userStats.value = stats
             } catch (e: Exception) {
                 _insertStatus.value = e.message
@@ -72,7 +81,7 @@ class MainViewModel @Inject constructor(
     fun getLicensePlate(id: Int) {
         viewModelScope.launch {
             try {
-                _licensePlate.value = repository.getLicensePlate(id)
+                _licensePlate.value = plateRepository.getLicensePlate(id)
             } catch (e: Exception) {
                 _insertStatus.value = "Error fetching license plate: ${e.message}"
             }
@@ -92,10 +101,52 @@ class MainViewModel @Inject constructor(
         if (_submittedWords.size == 3) {
             _totalScore.value += _submittedWords.sum()
             _medal.value = GameLogic.getMedal(_totalScore.value)
+            updateStats()
+            resetGame()
         }
     }
 
-    fun resetGame(){
+    private fun updateStats() {
+        viewModelScope.launch {
+            val currentStats = userStats.value ?: return@launch
+
+            val newTotalPlayed = currentStats.totalDaysPlayed + 1
+
+            val (newTotalGold, newCurrentConsecutiveGold, newMaxConsecutiveGold) = if (_medal.value == "Gold") {
+                val updatedConsecutiveGold = currentStats.currentConsecutiveGold + 1
+                val updatedMaxConsecutiveGold =
+                    maxOf(currentStats.maxConsecutiveGold, updatedConsecutiveGold)
+                Triple(
+                    currentStats.totalGold + 1,
+                    updatedConsecutiveGold,
+                    updatedMaxConsecutiveGold
+                )
+            } else {
+                Triple(currentStats.totalGold, 0, currentStats.maxConsecutiveGold)
+            }
+
+
+            val newTotalSilver =
+                if (medal.value == "Silver") currentStats.totalSilver + 1 else currentStats.totalSilver
+            val newTotalBronze =
+                if (medal.value == "Bronze") currentStats.totalBronze + 1 else currentStats.totalBronze
+
+            val newStats = currentStats.copy(
+                totalDaysPlayed = newTotalPlayed,
+                totalGold = newTotalGold,
+                totalSilver = newTotalSilver,
+                totalBronze = newTotalBronze,
+                maxScore = maxOf(currentStats.maxScore, totalScore.value),
+                lastDayResult = _medal.value,
+                currentConsecutiveGold = newCurrentConsecutiveGold,
+                maxConsecutiveGold = newMaxConsecutiveGold
+            )
+
+            userRepository.updateUserStats(newStats)
+        }
+    }
+
+    fun resetGame() {
         _realTimeScore.value = 0
         _submittedWords.clear()
         _totalScore.value = 0
