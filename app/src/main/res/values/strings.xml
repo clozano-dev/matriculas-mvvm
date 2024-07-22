@@ -3,4 +3,9 @@
     <string name="statistics">Estadísticas</string>
     <string name="home">Inicio</string>
     <string name="rules">Reglas</string>
+    <string name="insert_word">Introduce una palabra</string>
+    <string name="submit_word">Enviar palabra</string>
+    <string name="total_score">Puntuación total: %1$s</string>
+    <string name="medal">Medalla: %1$s</string>
+    <string name="score">Puntuación: %1$s</string>
 </resources>
