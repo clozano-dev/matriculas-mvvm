@@ -45,7 +45,7 @@ fun HomeScreen(viewModel: MainViewModel) {
     var wordsSubmitted by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        viewModel.getLicensePlate(1)
+        viewModel.fetchCurrentLicensePlate()
     }
 
     LaunchedEffect(word) {
