@@ -45,6 +45,7 @@ class MainViewModel @Inject constructor(
 
     init {
         getUserStats()
+        fetchCurrentLicensePlate()
     }
 
     fun insertUserStats(userStats: UserStats) {
@@ -81,7 +82,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getLicensePlate(id: Int) {
+    fun fetchCurrentLicensePlate() {
+        viewModelScope.launch {
+            try {
+                _licensePlate.value = plateRepository.getLicensePlateByDate()
+            } catch (e: Exception) {
+                _insertStatus.value = "Error fetching license plate: ${e.message}"
+            }
+        }
+    }
+
+    fun getLicensePlate(id: String) {
         viewModelScope.launch {
             try {
                 _licensePlate.value = plateRepository.getLicensePlate(id)

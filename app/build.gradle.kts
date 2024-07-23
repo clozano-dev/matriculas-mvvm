@@ -69,6 +69,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.2.0-alpha05")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.hilt.work)
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     //room dependencies
@@ -95,6 +96,9 @@ dependencies {
     //coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    //workmanager
+    implementation ("androidx.work:work-runtime-ktx:2.7.1")
 
 
     testImplementation(libs.junit)
