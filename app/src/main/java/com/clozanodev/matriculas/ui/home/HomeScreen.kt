@@ -40,16 +40,18 @@ fun HomeScreen(viewModel: MainViewModel) {
     val realTimeScore by viewModel.realTimeScore.collectAsState()
     val totalScore by viewModel.totalScore.collectAsState()
     val medal by viewModel.medal.collectAsState()
+    val isGameLocked by viewModel.isGameLocked.collectAsState()
 
     var word by remember { mutableStateOf("") }
     var wordsSubmitted by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        viewModel.fetchCurrentLicensePlate()
+        viewModel.fetchCurrentLicensePlate(false)
     }
 
     LaunchedEffect(word) {
-        viewModel.calculateRealTimeScore(word)
+        if (!isGameLocked)
+            {viewModel.calculateRealTimeScore(word)}
     }
 
     Column(
@@ -84,7 +86,8 @@ fun HomeScreen(viewModel: MainViewModel) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            enabled = !isGameLocked
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -101,7 +104,8 @@ fun HomeScreen(viewModel: MainViewModel) {
                 } else {
                     Toast.makeText(context, "La palabra no existe en el diccionario", Toast.LENGTH_SHORT).show()
                 }
-            }
+            },
+            enabled = !isGameLocked
         ) {
             Text(stringResource(R.string.submit_word))
         }
@@ -109,15 +113,5 @@ fun HomeScreen(viewModel: MainViewModel) {
         Text(text = stringResource(R.string.total_score, totalScore))
         Text(text = stringResource(R.string.medal, medal))
 
-        if (wordsSubmitted == 3) {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(onClick = {
-                viewModel.resetGame()
-                wordsSubmitted = 0
-            }) {
-                Text("Restart game")
-            }
-        }
     }
 }
