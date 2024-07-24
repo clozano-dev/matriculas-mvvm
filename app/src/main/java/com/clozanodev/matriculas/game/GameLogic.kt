@@ -49,10 +49,19 @@ fun checkOrder(letters: String, word: String): Boolean {
     val secondLetter = letters[1]
     val thirdLetter = letters[2]
 
-    val indexOfFirstLetter = word.indexOf(firstLetter)
-    val indexOfSecondLetter = word.indexOf(secondLetter)
-    val indexOfThirdLetter = word.indexOf(thirdLetter)
+    val firstIndices = word.indices.filter { word[it] == firstLetter }
+    val secondIndices = word.indices.filter { word[it] == secondLetter }
+    val thirdIndices = word.indices.filter { word[it] == thirdLetter }
 
-    return (indexOfFirstLetter < indexOfSecondLetter && indexOfSecondLetter < indexOfThirdLetter)
+    for (i in firstIndices) {
+        for (j in secondIndices) {
+            for (k in thirdIndices) {
+                if (i < j && j < k) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
 }
 

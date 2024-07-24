@@ -65,8 +65,6 @@ class MatriculasApp : Application(), Configuration.Provider {
             ExistingPeriodicWorkPolicy.REPLACE,
             dailyWorkRequest
         )
-
-
     }
 
     private fun initializeDatabase() {

@@ -1,5 +1,6 @@
 package com.clozanodev.matriculas.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import com.clozanodev.matriculas.repository.PlateRepository
 import com.clozanodev.matriculas.repository.UserRepository
 import com.clozanodev.matriculas.repository.WordRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val plateRepository: PlateRepository,
     private val userRepository: UserRepository,
-    private val wordRepository: WordRepository
+    private val wordRepository: WordRepository,
+    @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
     private val _insertStatus = MutableStateFlow<String?>(null)
@@ -43,21 +46,23 @@ class MainViewModel @Inject constructor(
 
     private val _submittedWords = mutableListOf<Int>()
 
+    private val _isGameLocked = MutableStateFlow(false)
+    val isGameLocked: StateFlow<Boolean> get() = _isGameLocked
+
+    private val sharedPreferences = appContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
     init {
         getUserStats()
-        fetchCurrentLicensePlate()
+        fetchCurrentLicensePlate(false)
+        checkGameLockState()
     }
 
-    fun insertUserStats(userStats: UserStats) {
-        viewModelScope.launch {
-            try {
-                userRepository.insertUserStats(userStats)
-                _insertStatus.value = "User stats inserted successfully"
-                Log.d("MainViewModel", "User stats inserted successfully")
-            } catch (e: Exception) {
-                _insertStatus.value = e.message
-            }
-        }
+    private fun saveGameLockState(isLocked: Boolean) {
+        sharedPreferences.edit().putBoolean("isGameLocked", isLocked).apply()
+    }
+
+    private fun checkGameLockState() {
+        _isGameLocked.value = sharedPreferences.getBoolean("isGameLocked", false)
     }
 
     fun getUserStats() {
@@ -82,20 +87,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun fetchCurrentLicensePlate() {
+    fun fetchCurrentLicensePlate(forceUnlock: Boolean = true) {
         viewModelScope.launch {
             try {
                 _licensePlate.value = plateRepository.getLicensePlateByDate()
-            } catch (e: Exception) {
-                _insertStatus.value = "Error fetching license plate: ${e.message}"
-            }
-        }
-    }
-
-    fun getLicensePlate(id: String) {
-        viewModelScope.launch {
-            try {
-                _licensePlate.value = plateRepository.getLicensePlate(id)
+                if (forceUnlock) {
+                    _isGameLocked.value = false
+                    saveGameLockState(false)
+                }
             } catch (e: Exception) {
                 _insertStatus.value = "Error fetching license plate: ${e.message}"
             }
@@ -112,6 +111,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun submitWord(word: String) {
+        if (_isGameLocked.value) return
+
         val currentLicensePlate = licensePlate.value?.plate ?: return
         val score = GameLogic.calculateScore(currentLicensePlate, word)
         _submittedWords.add(score)
@@ -120,8 +121,18 @@ class MainViewModel @Inject constructor(
             _totalScore.value += _submittedWords.sum()
             _medal.value = GameLogic.getMedal(_totalScore.value)
             updateStats()
-            resetGame()
+            lockGame()
         }
+    }
+
+    private fun lockGame() {
+        _isGameLocked.value = true
+        saveGameLockState(true)
+    }
+
+    private fun unlockGame() {
+        _isGameLocked.value = false
+        saveGameLockState(false)
     }
 
     private fun updateStats() {
@@ -163,12 +174,4 @@ class MainViewModel @Inject constructor(
             userRepository.updateUserStats(newStats)
         }
     }
-
-    fun resetGame() {
-        _realTimeScore.value = 0
-        _submittedWords.clear()
-        _totalScore.value = 0
-        _medal.value = ""
-    }
-
 }

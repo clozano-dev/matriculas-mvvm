@@ -3,13 +3,9 @@ package com.clozanodev.matriculas.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.clozanodev.matriculas.data.local.dao.UserStatsDao
-import com.clozanodev.matriculas.data.remote.api.LicensePlateApi
-import com.clozanodev.matriculas.data.remote.entities.LicensePlate
 import com.clozanodev.matriculas.repository.PlateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class UpdateLicensePlateWorker(
     context: Context,
@@ -31,6 +27,4 @@ class UpdateLicensePlateWorker(
         }
 
     }
-
-
 }
