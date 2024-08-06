@@ -55,18 +55,27 @@ class MainViewModel @Inject constructor(
     init {
         getUserStats()
         fetchCurrentLicensePlate(false)
-        checkGameLockState()
+        loadGameState()
     }
 
     private fun saveGameLockState(isLocked: Boolean) {
         sharedPreferences.edit().putBoolean("isGameLocked", isLocked).apply()
     }
 
-    private fun checkGameLockState() {
-        _isGameLocked.value = sharedPreferences.getBoolean("isGameLocked", false)
+    private fun loadGameState() {
+        val isLocked = sharedPreferences.getBoolean("isGameLocked", false)
+        _isGameLocked.value = isLocked
+
+        if (!_isGameLocked.value) {
+            _submittedWords.clear()
+            _submittedWordsList.clear()
+            _totalScore.value = 0
+            _medal.value = ""
+        }
+
     }
 
-    fun getUserStats() {
+    private fun getUserStats() {
         viewModelScope.launch {
             try {
                 val stats = userRepository.getUserStats()
@@ -134,11 +143,6 @@ class MainViewModel @Inject constructor(
     private fun lockGame() {
         _isGameLocked.value = true
         saveGameLockState(true)
-    }
-
-    private fun unlockGame() {
-        _isGameLocked.value = false
-        saveGameLockState(false)
     }
 
     private fun updateStats() {
