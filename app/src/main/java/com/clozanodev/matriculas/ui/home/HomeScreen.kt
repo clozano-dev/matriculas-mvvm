@@ -97,12 +97,17 @@ fun HomeScreen(viewModel: MainViewModel) {
 
         Button(
             onClick = {
-                if (viewModel.verifyWord(word)) {
+                if (viewModel.verifyWord(word) && viewModel.checkPreviousWord(word)) {
                     viewModel.submitWord(word)
                     word = ""
                     wordsSubmitted += 1
                 } else {
-                    Toast.makeText(context, "La palabra no existe en el diccionario", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        if (!viewModel.verifyWord(word)) "La palabra no existe en el diccionario" else
+                        "La palabra ya ha sido enviada",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
             enabled = !isGameLocked
