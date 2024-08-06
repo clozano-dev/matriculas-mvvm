@@ -10,10 +10,15 @@ import kotlinx.coroutines.withContext
 class UpdateLicensePlateWorker(
     context: Context,
     workerParams: WorkerParameters,
-    private val plateRepository: PlateRepository
+    private val plateRepository: PlateRepository,
+    private val appContext: Context
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+
+        val sharedPreferences = appContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("isGameLocked", false).apply()
+
         try {
             val licensePlate = plateRepository.getLicensePlateByDate()
             if (licensePlate != null) {
