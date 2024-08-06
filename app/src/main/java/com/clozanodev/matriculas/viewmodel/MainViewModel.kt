@@ -45,6 +45,7 @@ class MainViewModel @Inject constructor(
     val medal: StateFlow<String> get() = _medal
 
     private val _submittedWords = mutableListOf<Int>()
+    private val _submittedWordsList = mutableListOf<String>()
 
     private val _isGameLocked = MutableStateFlow(false)
     val isGameLocked: StateFlow<Boolean> get() = _isGameLocked
@@ -110,12 +111,17 @@ class MainViewModel @Inject constructor(
         return wordRepository.isWordValid(word)
     }
 
+    fun checkPreviousWord(word: String): Boolean {
+        return !_submittedWordsList.contains(word)
+    }
+
     fun submitWord(word: String) {
         if (_isGameLocked.value) return
 
         val currentLicensePlate = licensePlate.value?.plate ?: return
         val score = GameLogic.calculateScore(currentLicensePlate, word)
         _submittedWords.add(score)
+        _submittedWordsList.add(word)
 
         if (_submittedWords.size == 3) {
             _totalScore.value += _submittedWords.sum()
