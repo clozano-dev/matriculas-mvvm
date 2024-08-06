@@ -44,7 +44,7 @@ class MatriculasApp : Application(), Configuration.Provider {
         val currentTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
         val twoAmUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
             set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 54)
+            set(Calendar.MINUTE, 51)
             set(Calendar.SECOND, 0)
         }
 
@@ -85,6 +85,8 @@ class MatriculasApp : Application(), Configuration.Provider {
     }
 
     override fun getWorkManagerConfiguration() =
-        Configuration.Builder().setWorkerFactory(workerFactory).build()
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
 }
