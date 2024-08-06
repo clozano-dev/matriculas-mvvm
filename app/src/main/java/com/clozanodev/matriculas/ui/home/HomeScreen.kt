@@ -47,6 +47,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 
     LaunchedEffect(Unit) {
         viewModel.fetchCurrentLicensePlate(false)
+        viewModel.loadGameState()
     }
 
     LaunchedEffect(word) {

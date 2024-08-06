@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(
         sharedPreferences.edit().putBoolean("isGameLocked", isLocked).apply()
     }
 
-    private fun loadGameState() {
+    fun loadGameState() {
         val isLocked = sharedPreferences.getBoolean("isGameLocked", false)
         _isGameLocked.value = isLocked
 
