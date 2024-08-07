@@ -35,9 +35,9 @@ object GameLogic {
 
     fun getMedal(score: Int): String {
         return when {
-            score >= 500 -> "Gold"
+            score >= 450 -> "Gold"
             score >= 300 -> "Silver"
-            score >= 200 -> "Bronze"
+            score >= 150 -> "Bronze"
             else -> "No medal"
         }
     }
