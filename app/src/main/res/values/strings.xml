@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">matriculas</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="home">Inicio</string>
+    <string name="rules">Reglas</string>
+    <string name="insert_word">Introduce una palabra</string>
+    <string name="submit_word">Enviar palabra</string>
+    <string name="total_score">Puntuación total: %1$s</string>
+    <string name="medal">Medalla: %1$s</string>
+    <string name="score">Puntuación: %1$s</string>
+
+    <string name="total_days_played">Días totales jugados: %1$d</string>
+    <string name="gold_days">Días oro: %1$d</string>
+    <string name="silver_days">Días plata: %1$d</string>
+    <string name="bronze_days">Días bronce: %1$d</string>
+    <string name="highest_score">Máxima puntuación: %1$d</string>
+    <string name="current_consecutive_gold">Días oro consecutivos actuales: %1$d</string>
+    <string name="max_consecutive_gold">Maxímo de días oro consecutivos: %1$d</string>
+    <string name="statistics_title">Estadísticas</string>
+    <string name="info">Información</string>
+    <string name="game_rules_title">Reglas del juego</string>
+    <string name="game_rules_description">Bienvenido a MATRÍCULAS: JUEGO DIARIO DE PALABRAS. El objetivo del juego es obtener la máxima puntuación posible introduciendo tres palabras relacionadas con una matrícula, que cambiará cada día.</string>
+    <string name="game_rules_score_title">Puntuación</string>
+    <string name="game_rules_score_description">Cada día aparecerá una nueva matrícula y se sumará la puntuación total obtenida en las tres palabras según las letras de la palabra y los multiplicadores conseguidos. </string>
+    <string name="game_rules_score_letter_title">Puntuación de las letras</string>
+    <string name="game_rules_score_letter_description">Cada letra sumará la siguiente puntuación: </string>
+    <string name="game_rules_multipliers_title">Multiplicadores</string>
+    <string name="game_rules_multipliers_description_1">Si la palabra contiene todas las letras de la matrícula, la puntuación se multiplica por dos</string>
+    <string name="game_rules_multipliers_description_2">Si la palabra contiene todas las letras de la matrícula en orden, la puntuación se multiplica por tres</string>
+    <string name="game_rules_multipliers_description_3">Si la palabra tiene el mismo número de letras que algún número de la matrícula, la puntuación se multiplica por dos tantas veces como veces esté repetido ese número</string>
+    <string name="game_rules_total_score_title">Puntuación total</string>
+    <string name="game_rules_total_score_description_1">"En función de la puntuación total obtenida en las tres palabras, se otorgará una copa: "</string>
+    <string name="game_rules_total_score_description_2">" - Oro: 450 puntos o más."</string>
+    <string name="game_rules_total_score_description_3">" - Plata: 300 puntos o más."</string>
+    <string name="game_rules_total_score_description_4">" - Bronce: 150 puntos o más."</string>
+    <string name="game_rules_valid_words_title">Palabras no válidas</string>
+    <string name="game_rules_valid_word_description_1">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\')</string>
+    <string name="game_rules_valid_word_description_2">La mayoría de palabras en plural no son válidas</string>
+    <string name="notification_channel_id">Avisos diarios</string>
+
+
 </resources>

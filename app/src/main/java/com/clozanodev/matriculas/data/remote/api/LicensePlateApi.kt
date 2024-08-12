@@ -8,8 +8,8 @@ class LicensePlateApi(private val firestore: FirebaseFirestore) {
 
     private val platesCollection = firestore.collection("licensePlates")
 
-    suspend fun getPlate(id: Int): LicensePlate? {
-        val document = platesCollection.document(id.toString()).get().await()
+    suspend fun getPlate(id: String): LicensePlate? {
+        val document = platesCollection.document(id).get().await()
         return if (document.exists()){
             document.toObject(LicensePlate::class.java)
         } else {
