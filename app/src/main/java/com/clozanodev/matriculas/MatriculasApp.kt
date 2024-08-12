@@ -23,6 +23,8 @@ import javax.inject.Inject
 @HiltAndroidApp
 class MatriculasApp : Application(), Configuration.Provider {
 
+
+
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
