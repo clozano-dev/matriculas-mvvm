@@ -36,6 +36,7 @@
     <string name="game_rules_valid_words_title">Palabras no válidas</string>
     <string name="game_rules_valid_word_description_1">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\')</string>
     <string name="game_rules_valid_word_description_2">La mayoría de palabras en plural no son válidas</string>
+    <string name="notification_channel_id">Avisos diarios</string>
 
 
 </resources>
