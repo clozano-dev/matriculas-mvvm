@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.clozanodev.matriculas.data.local.entities.UserStats
 import com.clozanodev.matriculas.data.remote.entities.LicensePlate
 import com.clozanodev.matriculas.game.GameLogic
+import com.clozanodev.matriculas.repository.NotificationRepository
 import com.clozanodev.matriculas.repository.PlateRepository
 import com.clozanodev.matriculas.repository.UserRepository
 import com.clozanodev.matriculas.repository.WordRepository
@@ -23,6 +24,7 @@ class MainViewModel @Inject constructor(
     private val plateRepository: PlateRepository,
     private val userRepository: UserRepository,
     private val wordRepository: WordRepository,
+    private val notificationRepository: NotificationRepository,
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
@@ -56,6 +58,11 @@ class MainViewModel @Inject constructor(
         getUserStats()
         fetchCurrentLicensePlate(false)
         loadGameState()
+        subscribeToDailyNotifications()
+    }
+
+    private fun subscribeToDailyNotifications() {
+        notificationRepository.subscribeToTopic("daily_notifications")
     }
 
     private fun saveGameLockState(isLocked: Boolean) {

@@ -55,7 +55,7 @@ val subtitleTextStyle = TextStyle(
 )
 
 val bodyTextStyle = TextStyle(
-    fontSize = 14.sp,
+    fontSize = 16.sp,
     fontWeight = FontWeight.Normal,
     fontFamily = regularFont,
     color = Black,
@@ -82,7 +82,7 @@ fun RulesScreen() {
         R.string.game_rules_valid_words_title,
         R.string.game_rules_valid_word_description_1,
         R.string.game_rules_valid_word_description_2
-        )
+    )
 
     val combinedItems = buildList {
         rules.forEachIndexed { index, ruleId ->
@@ -122,8 +122,14 @@ fun RulesScreen() {
                         R.string.game_rules_valid_words_title -> subtitleTextStyle
                         else -> bodyTextStyle
                     }
+
+                    val paddingModifier = if (style == subtitleTextStyle) {
+                        Modifier.padding(top = 16.dp, bottom = 2.dp)
+                    } else {
+                        Modifier.padding(4.dp)
+                    }
                     Text(
-                        text = text, style = style, modifier = Modifier.padding(8.dp)
+                        text = text, style = style, modifier = paddingModifier
                     )
                 }
             }
