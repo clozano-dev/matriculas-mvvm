@@ -38,7 +38,7 @@ import com.clozanodev.matriculas.ui.theme.MatriculasTheme
 val regularFont = FontFamily(Font(R.font.regular))
 
 val titleTextStyle = TextStyle(
-    fontSize = 40.sp,
+    fontSize = 32.sp,
     fontWeight = FontWeight.Bold,
     fontFamily = regularFont,
     shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
@@ -55,7 +55,7 @@ val subtitleTextStyle = TextStyle(
 )
 
 val bodyTextStyle = TextStyle(
-    fontSize = 18.sp,
+    fontSize = 14.sp,
     fontWeight = FontWeight.Normal,
     fontFamily = regularFont,
     color = Black,
