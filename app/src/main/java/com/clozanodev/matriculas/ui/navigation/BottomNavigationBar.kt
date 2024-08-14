@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
@@ -18,7 +19,8 @@ import com.clozanodev.matriculas.R
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     BottomNavigation(
-
+        backgroundColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary
     ) {
         val currentRoute = currentRoute(navController)
 
@@ -38,7 +40,7 @@ fun BottomNavigationBar(navController: NavController) {
         )
 
         BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.baseline_bar_chart_24), contentDescription = null) },
+            icon = { Icon(painterResource(R.drawable.stats), contentDescription = null) },
             label = { Text(text = stringResource(R.string.statistics)) },
             selected = currentRoute == "statistics",
             onClick = {

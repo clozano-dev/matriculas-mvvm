@@ -1,20 +1,14 @@
 package com.clozanodev.matriculas.ui.rules
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,24 +21,14 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
+import com.clozanodev.matriculas.ui.MyPlate
 import com.clozanodev.matriculas.ui.theme.Black
 import com.clozanodev.matriculas.ui.theme.MainGreen
-import com.clozanodev.matriculas.ui.theme.MatriculasTheme
 
-val regularFont = FontFamily(Font(R.font.regular))
-
-val titleTextStyle = TextStyle(
-    fontSize = 32.sp,
-    fontWeight = FontWeight.Bold,
-    fontFamily = regularFont,
-    shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
-    color = MainGreen,
-    textAlign = TextAlign.Center
-)
+val regularFont = FontFamily(Font(R.font.roboto_regular))
 
 val subtitleTextStyle = TextStyle(
     fontSize = 24.sp,
@@ -99,10 +83,17 @@ fun RulesScreen() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+/*
+        MyPlate(text = stringResource(R.string.game_rules_title))
+*/
         Text(
-            modifier = Modifier.padding(16.dp),
             text = stringResource(R.string.game_rules_title),
-            style = titleTextStyle
+            style = MaterialTheme.typography.titleLarge.copy(
+                shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
+                color = MainGreen,
+                textAlign = TextAlign.Center
+            )
+
         )
         Spacer(modifier = Modifier.height(16.dp))
 

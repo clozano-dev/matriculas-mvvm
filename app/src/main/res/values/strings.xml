@@ -9,14 +9,24 @@
     <string name="medal">Medalla: %1$s</string>
     <string name="score">Puntuación: %1$s</string>
 
-    <string name="total_days_played">Días totales jugados: %1$d</string>
-    <string name="gold_days">Días oro: %1$d</string>
-    <string name="silver_days">Días plata: %1$d</string>
-    <string name="bronze_days">Días bronce: %1$d</string>
-    <string name="highest_score">Máxima puntuación: %1$d</string>
-    <string name="current_consecutive_gold">Días oro consecutivos actuales: %1$d</string>
-    <string name="max_consecutive_gold">Maxímo de días oro consecutivos: %1$d</string>
+    <string name="total_days_played_database">Días totales jugados: %1$d</string>
+    <string name="gold_days_database">Días oro: %1$d</string>
+    <string name="silver_days_database">Días plata: %1$d</string>
+    <string name="bronze_days_database">Días bronce: %1$d</string>
+    <string name="highest_score_database">Máxima puntuación: %1$d</string>
+    <string name="current_consecutive_gold_database">Días oro consecutivos actuales: %1$d</string>
+    <string name="max_consecutive_gold_database">Maxímo de días oro consecutivos: %1$d</string>
+    <string name="statistics_title_database">Estadísticas</string>
+
+    <string name="total_days_played">Días totales jugados</string>
+    <string name="gold_days">Días oro</string>
+    <string name="silver_days">Días plata</string>
+    <string name="bronze_days">Días bronce</string>
+    <string name="highest_score">Máxima puntuación</string>
+    <string name="current_consecutive_gold">Días oro consecutivos actuales</string>
+    <string name="max_consecutive_gold">Maxímo de días oro consecutivos</string>
     <string name="statistics_title">Estadísticas</string>
+
     <string name="info">Información</string>
     <string name="game_rules_title">Reglas del juego</string>
     <string name="game_rules_description">Bienvenido a MATRÍCULAS: JUEGO DIARIO DE PALABRAS. El objetivo del juego es obtener la máxima puntuación posible introduciendo tres palabras relacionadas con una matrícula, que cambiará cada día.</string>

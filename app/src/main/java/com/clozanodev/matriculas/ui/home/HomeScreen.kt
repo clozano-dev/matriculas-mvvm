@@ -1,5 +1,6 @@
 package com.clozanodev.matriculas.ui.home
 
+import android.graphics.Color
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,13 +24,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
+import com.clozanodev.matriculas.ui.MyPlate
+import com.clozanodev.matriculas.ui.theme.PlateFontFamily
 import com.clozanodev.matriculas.viewmodel.MainViewModel
 
 @Composable
@@ -62,7 +68,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("License Plate: ${licensePlate?.plate}")
+        MyPlate(text = "${licensePlate?.plate}")
 
         Spacer(modifier = Modifier.height(16.dp))
 

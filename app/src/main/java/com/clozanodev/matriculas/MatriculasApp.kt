@@ -45,8 +45,8 @@ class MatriculasApp : Application(), Configuration.Provider {
     private fun setupDailyWork() {
         val currentTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
         val twoAmUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 51)
+            set(Calendar.HOUR_OF_DAY, 3)
+            set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
 
