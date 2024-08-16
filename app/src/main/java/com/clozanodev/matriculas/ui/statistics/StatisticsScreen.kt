@@ -20,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.clozanodev.matriculas.R
-import com.clozanodev.matriculas.ui.theme.MainGreen
 import com.clozanodev.matriculas.viewmodel.MainViewModel
 
 @Composable
@@ -43,7 +42,7 @@ fun StatisticsScreen(viewModel: MainViewModel) {
             text = stringResource(R.string.statistics_title),
             style = MaterialTheme.typography.titleLarge.copy(
                 shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
-                color = MainGreen,
+                color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
         )

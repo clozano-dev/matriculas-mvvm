@@ -65,3 +65,15 @@ fun checkOrder(letters: String, word: String): Boolean {
     return false
 }
 
+fun String.containsAllLetters(licensePlate: String?): Boolean {
+    return licensePlate?.substring(4)?.all { this.contains(it, ignoreCase = true) } ?: false
+}
+
+fun String.containsAllLettersInOrder(licensePlate: String?): Boolean {
+    return licensePlate?.substring(4)?.let { checkOrder(it, this.uppercase()) } ?: false
+}
+
+fun String.containsNumbers(licensePlate: String?): Boolean {
+    val numbers = licensePlate?.substring(0, 4)?.toList()?.map { it.toString().toInt() }
+    return numbers?.contains(this.length) ?: false
+}

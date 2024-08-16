@@ -24,30 +24,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
-import com.clozanodev.matriculas.ui.MyPlate
-import com.clozanodev.matriculas.ui.theme.Black
-import com.clozanodev.matriculas.ui.theme.MainGreen
 
 val regularFont = FontFamily(Font(R.font.roboto_regular))
 
-val subtitleTextStyle = TextStyle(
-    fontSize = 24.sp,
-    fontWeight = FontWeight.Bold,
-    fontFamily = regularFont,
-    color = MainGreen,
-    textAlign = TextAlign.Start
-)
 
-val bodyTextStyle = TextStyle(
-    fontSize = 16.sp,
-    fontWeight = FontWeight.Normal,
-    fontFamily = regularFont,
-    color = Black,
-    textAlign = TextAlign.Start
-)
 
 @Composable
 fun RulesScreen() {
+    val subtitleTextStyle = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = regularFont,
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Start
+    )
+
+    val bodyTextStyle = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = regularFont,
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Start
+    )
+
     val rules = listOf(
         R.string.game_rules_description,
         R.string.game_rules_score_title,
@@ -90,7 +89,7 @@ fun RulesScreen() {
             text = stringResource(R.string.game_rules_title),
             style = MaterialTheme.typography.titleLarge.copy(
                 shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
-                color = MainGreen,
+                color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
 

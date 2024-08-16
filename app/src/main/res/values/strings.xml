@@ -47,6 +47,11 @@
     <string name="game_rules_valid_word_description_1">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\')</string>
     <string name="game_rules_valid_word_description_2">La mayoría de palabras en plural no son válidas</string>
     <string name="notification_channel_id">Avisos diarios</string>
+    <string name="plates">Matrículas</string>
+    <string name="return_tomorrow">Vuelve mañana para jugar con la siguiente matrícula</string>
+    <string name="rule_1">La palabra contiene todas las letras</string>
+    <string name="rule_2">La palabra contiene todas las letras en orden</string>
+    <string name="rule_3">La cantidad de letras coincide con un número</string>
 
 
 </resources>

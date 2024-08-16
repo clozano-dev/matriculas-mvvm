@@ -40,7 +40,6 @@ fun MyPlate(text: String) {
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
         )
         Text(
             text = text,
