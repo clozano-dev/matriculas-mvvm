@@ -15,7 +15,10 @@ val LightPrimary = Color(0xFF033EA2)
 val LightSecondary = Color(0xFF000C21)
 val LightBackground = Color(0xFFFFFFFF)
 val LightSurface = Color(0xFFF2F2F2)
-val LightOnPrimary = Color.White
-val LightOnSecondary = Color.White
+val LightOnPrimary = Color(0xFFFFFFFF)
+val LightOnSecondary = Color(0xFFFFFFFF)
 val LightOnBackground = Color.Black
 val LightOnSurface = Color.Black
+
+val Green = Color(0xFF1E7554)
+val Red = Color(0xFFEE444E)

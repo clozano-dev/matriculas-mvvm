@@ -8,10 +8,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,6 +43,8 @@ import com.clozanodev.matriculas.game.containsAllLettersInOrder
 import com.clozanodev.matriculas.game.containsNumbers
 import com.clozanodev.matriculas.ui.MyPlate
 import com.clozanodev.matriculas.viewmodel.MainViewModel
+import com.clozanodev.matriculas.ui.theme.Green
+import com.clozanodev.matriculas.ui.theme.Red
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel) {
@@ -49,6 +55,7 @@ fun HomeScreen(viewModel: MainViewModel) {
     val totalScore by viewModel.totalScore.collectAsState()
     val medal by viewModel.medal.collectAsState()
     val isGameLocked by viewModel.isGameLocked.collectAsState()
+    val submittedWordsAndScores = viewModel.submittedWordsAndScores
 
     var word by remember { mutableStateOf("") }
     var wordsSubmitted by remember { mutableStateOf(0) }
@@ -79,7 +86,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        
+
         Text(
             text = stringResource(R.string.plates),
             style = MaterialTheme.typography.titleLarge.copy(
@@ -89,14 +96,13 @@ fun HomeScreen(viewModel: MainViewModel) {
                     blurRadius = 2f
                 ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
             ),
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
         )
 
         MyPlate(text = "${licensePlate?.plate}")
 
-        if (!isGameLocked){
-            TextField(
+        if (!isGameLocked) {
+            OutlinedTextField(
                 value = word,
                 onValueChange = { input ->
                     if (input.all { it.isLetter() }) {
@@ -106,7 +112,8 @@ fun HomeScreen(viewModel: MainViewModel) {
                 label = { Text(stringResource(R.string.insert_word)) },
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text
+                    capitalization = KeyboardCapitalization.Characters,
+                    keyboardType = KeyboardType.Text
                 ),
                 visualTransformation = { text ->
                     TransformedText(
@@ -114,6 +121,24 @@ fun HomeScreen(viewModel: MainViewModel) {
                     )
 
                 },
+
+
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = MaterialTheme.colorScheme.primary,
+                    unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedPlaceholderColor = MaterialTheme.colorScheme.primary,
+                    focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                    unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                    focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                    unfocusedTrailingIconColor = MaterialTheme.colorScheme.primary
+                ),
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -122,17 +147,17 @@ fun HomeScreen(viewModel: MainViewModel) {
 
             Text(
                 text = stringResource(R.string.rule_1),
-                color = if (containsAllLetters) Color.Green else Color.Red,
+                color = if (containsAllLetters) Green else Red,
                 style = MaterialTheme.typography.bodyLarge,
             )
             Text(
                 text = stringResource(R.string.rule_2),
-                color = if (containsAllLettersInOrder) Color.Green else Color.Red,
+                color = if (containsAllLettersInOrder) Green else Red,
                 style = MaterialTheme.typography.bodyLarge,
             )
             Text(
                 text = stringResource(R.string.rule_3),
-                color = if (containsNumbers) Color.Green else Color.Red,
+                color = if (containsNumbers) Green else Red,
                 style = MaterialTheme.typography.bodyLarge,
             )
 
@@ -167,13 +192,37 @@ fun HomeScreen(viewModel: MainViewModel) {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }, enabled = !isGameLocked
+            },
+            enabled = !isGameLocked,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
         ) {
-            Text(stringResource(R.string.submit_word))
+            Text(
+                text = stringResource(R.string.submit_word),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            submittedWordsAndScores.forEach { (word, score) ->
+
+                WordsCard(word = word, score = score.toString())
+
+                /*Text(
+                    text = "$word: $score",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )*/
+            }
         }
 
         Text(text = stringResource(R.string.total_score, totalScore))
         Text(text = stringResource(R.string.medal, medal))
-
     }
 }

@@ -11,6 +11,8 @@ import com.clozanodev.matriculas.repository.NotificationRepository
 import com.clozanodev.matriculas.repository.PlateRepository
 import com.clozanodev.matriculas.repository.UserRepository
 import com.clozanodev.matriculas.repository.WordRepository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,12 +54,16 @@ class MainViewModel @Inject constructor(
     private val _isGameLocked = MutableStateFlow(false)
     val isGameLocked: StateFlow<Boolean> get() = _isGameLocked
 
+    private val _submittedWordsAndScores = mutableListOf<Pair<String, Int>>()
+    val submittedWordsAndScores: List<Pair<String, Int>> get() = _submittedWordsAndScores
+
     private val sharedPreferences = appContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
     init {
         getUserStats()
         fetchCurrentLicensePlate(false)
         loadGameState()
+        loadSubmittedWordAndScores()
         subscribeToDailyNotifications()
     }
 
@@ -69,6 +75,20 @@ class MainViewModel @Inject constructor(
         sharedPreferences.edit().putBoolean("isGameLocked", isLocked).apply()
     }
 
+    private fun saveSubmittedWordAndScores(){
+        val json = Gson().toJson(_submittedWordsAndScores)
+        sharedPreferences.edit().putString("submittedWordsAndScores", json).apply()
+    }
+
+    private fun loadSubmittedWordAndScores(){
+        val json = sharedPreferences.getString("submittedWordsAndScores", null)
+        if (json != null) {
+            val type = object : TypeToken<List<Pair<String, Int>>>() {}.type
+            _submittedWordsAndScores.clear()
+            _submittedWordsAndScores.addAll(Gson().fromJson(json, type))
+        }
+    }
+
     fun loadGameState() {
         val isLocked = sharedPreferences.getBoolean("isGameLocked", false)
         _isGameLocked.value = isLocked
@@ -78,6 +98,7 @@ class MainViewModel @Inject constructor(
             _submittedWordsList.clear()
             _totalScore.value = 0
             _medal.value = ""
+            saveSubmittedWordAndScores()
         }
 
     }
@@ -136,11 +157,15 @@ class MainViewModel @Inject constructor(
 
         val currentLicensePlate = licensePlate.value?.plate ?: return
         val score = GameLogic.calculateScore(currentLicensePlate, word)
-        _submittedWords.add(score)
-        _submittedWordsList.add(word)
 
-        if (_submittedWords.size == 3) {
-            _totalScore.value += _submittedWords.sum()
+        _submittedWordsAndScores.add(word to score)
+        saveSubmittedWordAndScores()
+
+        /*_submittedWords.add(score)
+        _submittedWordsList.add(word)*/
+
+        if (_submittedWordsAndScores.size == 3) {
+            _totalScore.value += _submittedWordsAndScores.sumOf { it.second }
             _medal.value = GameLogic.getMedal(_totalScore.value)
             updateStats()
             lockGame()
