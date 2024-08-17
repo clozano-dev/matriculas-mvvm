@@ -34,7 +34,7 @@ fun WordsCard(word: String, score: String) {
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp).padding(horizontal = 64.dp)
+            .padding(4.dp).padding(horizontal = 16.dp)
 
     ) {
 
@@ -49,7 +49,7 @@ fun WordsCard(word: String, score: String) {
                 modifier = Modifier.weight(1f).padding(end = 8.dp)
             )
             Text(
-                text = score,
+                text = "$score puntos",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary
             )

@@ -22,3 +22,6 @@ val LightOnSurface = Color.Black
 
 val Green = Color(0xFF1E7554)
 val Red = Color(0xFFEE444E)
+val Gold = Color(0xFFF2C94C)
+val Silver = Color(0xFFC0C0C0)
+val Bronze = Color(0xFFCD7F32)

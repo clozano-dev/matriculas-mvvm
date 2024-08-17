@@ -57,19 +57,19 @@ fun StatisticsScreen(viewModel: MainViewModel) {
             StatisticsCard(
                 title = stringResource(R.string.gold_days),
                 value = stats.totalGold.toString(),
-                iconResId = R.drawable.trophy_gold
+                iconResId = R.drawable.medal_gold
             )
 
             StatisticsCard(
                 title = stringResource(R.string.silver_days),
                 value = stats.totalSilver.toString(),
-                iconResId = R.drawable.trophy_silver
+                iconResId = R.drawable.medal_silver
             )
 
             StatisticsCard(
                 title = stringResource(R.string.bronze_days),
                 value = stats.totalBronze.toString(),
-                iconResId = R.drawable.trophy_bronze
+                iconResId = R.drawable.medal_bronze
             )
 
             StatisticsCard(

@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,7 +39,6 @@ import com.clozanodev.matriculas.R
 import com.clozanodev.matriculas.game.containsAllLetters
 import com.clozanodev.matriculas.game.containsAllLettersInOrder
 import com.clozanodev.matriculas.game.containsNumbers
-import com.clozanodev.matriculas.ui.MyPlate
 import com.clozanodev.matriculas.viewmodel.MainViewModel
 import com.clozanodev.matriculas.ui.theme.Green
 import com.clozanodev.matriculas.ui.theme.Red
@@ -220,10 +217,9 @@ fun HomeScreen(viewModel: MainViewModel) {
             }
         }
 
-        Text(text = stringResource(R.string.total_score, totalScore))
 
         if (isGameLocked) {
-            Text(text = stringResource(R.string.medal, medal))
+            ScoreCard(score = totalScore.toString(), medal = medal)
         }
     }
 }
