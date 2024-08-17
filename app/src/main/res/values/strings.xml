@@ -35,17 +35,20 @@
     <string name="game_rules_score_letter_title">Puntuación de las letras</string>
     <string name="game_rules_score_letter_description">Cada letra sumará la siguiente puntuación: </string>
     <string name="game_rules_multipliers_title">Multiplicadores</string>
-    <string name="game_rules_multipliers_description_1">Si la palabra contiene todas las letras de la matrícula, la puntuación se multiplica por dos</string>
-    <string name="game_rules_multipliers_description_2">Si la palabra contiene todas las letras de la matrícula en orden, la puntuación se multiplica por tres</string>
-    <string name="game_rules_multipliers_description_3">Si la palabra tiene el mismo número de letras que algún número de la matrícula, la puntuación se multiplica por dos tantas veces como veces esté repetido ese número</string>
+    <string name="game_rules_multipliers_description_1">Si la palabra contiene todas las letras de la matrícula, la puntuación se multiplica por dos.</string>
+    <string name="game_rules_multipliers_description_2">Si la palabra contiene todas las letras de la matrícula en orden, la puntuación se multiplica por tres.</string>
+    <string name="game_rules_multipliers_description_3">Si la palabra tiene el mismo número de letras que algún número de la matrícula, la puntuación se multiplica por dos tantas veces como veces esté repetido ese número.</string>
     <string name="game_rules_total_score_title">Puntuación total</string>
     <string name="game_rules_total_score_description_1">"En función de la puntuación total obtenida en las tres palabras, se otorgará una copa: "</string>
     <string name="game_rules_total_score_description_2">" - Oro: 450 puntos o más."</string>
     <string name="game_rules_total_score_description_3">" - Plata: 300 puntos o más."</string>
     <string name="game_rules_total_score_description_4">" - Bronce: 150 puntos o más."</string>
     <string name="game_rules_valid_words_title">Palabras no válidas</string>
-    <string name="game_rules_valid_word_description_1">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\')</string>
-    <string name="game_rules_valid_word_description_2">La mayoría de palabras en plural no son válidas</string>
+    <string name="game_rules_valid_word_description_1">No se admiten tiempos verbales (ejemplo: \'vendrá\', \'jugaba\').</string>
+    <string name="game_rules_valid_word_description_2">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\').</string>
+    <string name="game_rules_valid_word_description_3">La mayoría de palabras en plural no son válidas.</string>
+
+
     <string name="notification_channel_id">Avisos diarios</string>
     <string name="plates">Matrículas</string>
     <string name="return_tomorrow">Vuelve mañana para jugar con la siguiente matrícula</string>
