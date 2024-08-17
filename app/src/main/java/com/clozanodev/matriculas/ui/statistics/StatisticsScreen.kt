@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,65 +32,65 @@ fun StatisticsScreen(viewModel: MainViewModel) {
         viewModel.refreshUserStats()
     }
 
+    val statisticsList = listOf(
+        Triple(
+            stringResource(R.string.total_days_played),
+            userStats?.totalDaysPlayed.toString(),
+            R.drawable.days
+        ), Triple(
+            stringResource(R.string.gold_days),
+            userStats?.totalGold.toString(),
+            R.drawable.medal_gold
+        ), Triple(
+            stringResource(R.string.silver_days),
+            userStats?.totalSilver.toString(),
+            R.drawable.medal_silver
+        ), Triple(
+            stringResource(R.string.bronze_days),
+            userStats?.totalBronze.toString(),
+            R.drawable.medal_bronze
+        ), Triple(
+            stringResource(R.string.highest_score),
+            userStats?.maxScore.toString(),
+            R.drawable.high_score
+        ), Triple(
+            stringResource(R.string.current_consecutive_gold),
+            userStats?.currentConsecutiveGold.toString(),
+            R.drawable.current_streak
+        ), Triple(
+            stringResource(R.string.max_consecutive_gold),
+            userStats?.maxConsecutiveGold.toString(),
+            R.drawable.max_streak
+        )
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
             text = stringResource(R.string.statistics_title),
             style = MaterialTheme.typography.titleLarge.copy(
                 shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
-            )
+            ),
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        userStats?.let { stats ->
-            StatisticsCard(
-                title = stringResource(R.string.total_days_played),
-                value = stats.totalDaysPlayed.toString(),
-                iconResId = R.drawable.days
-            )
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
 
-            StatisticsCard(
-                title = stringResource(R.string.gold_days),
-                value = stats.totalGold.toString(),
-                iconResId = R.drawable.medal_gold
-            )
 
-            StatisticsCard(
-                title = stringResource(R.string.silver_days),
-                value = stats.totalSilver.toString(),
-                iconResId = R.drawable.medal_silver
-            )
-
-            StatisticsCard(
-                title = stringResource(R.string.bronze_days),
-                value = stats.totalBronze.toString(),
-                iconResId = R.drawable.medal_bronze
-            )
-
-            StatisticsCard(
-                title = stringResource(R.string.highest_score),
-                value = stats.maxScore.toString(),
-                iconResId = R.drawable.high_score
-            )
-
-            StatisticsCard(
-                title = stringResource(R.string.current_consecutive_gold),
-                value = stats.currentConsecutiveGold.toString(),
-                iconResId = R.drawable.current_streak
-            )
-
-            StatisticsCard(
-                title = stringResource(R.string.max_consecutive_gold),
-                value = stats.maxConsecutiveGold.toString(),
-                iconResId = R.drawable.max_streak
-            )
+            items(statisticsList) { (title, value, iconResId) ->
+                StatisticsCard(
+                    title = title, value = value, iconResId = iconResId
+                )
+            }
         }
     }
 }
