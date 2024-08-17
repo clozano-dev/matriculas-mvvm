@@ -75,6 +75,11 @@ class MainViewModel @Inject constructor(
         sharedPreferences.edit().putBoolean("isGameLocked", isLocked).apply()
     }
 
+    private fun saveTotalScore(score: Int, medal: String) {
+        sharedPreferences.edit().putInt("totalScore", score).apply()
+        sharedPreferences.edit().putString("medal", medal).apply()
+    }
+
     private fun saveSubmittedWordAndScores(){
         val json = Gson().toJson(_submittedWordsAndScores)
         sharedPreferences.edit().putString("submittedWordsAndScores", json).apply()
@@ -99,6 +104,9 @@ class MainViewModel @Inject constructor(
             _totalScore.value = 0
             _medal.value = ""
             saveSubmittedWordAndScores()
+        } else {
+            _totalScore.value = sharedPreferences.getInt("totalScore", 0)
+            _medal.value = sharedPreferences.getString("medal", "") ?: ""
         }
 
     }
@@ -161,12 +169,11 @@ class MainViewModel @Inject constructor(
         _submittedWordsAndScores.add(word to score)
         saveSubmittedWordAndScores()
 
-        /*_submittedWords.add(score)
-        _submittedWordsList.add(word)*/
+        _totalScore.value += score
 
         if (_submittedWordsAndScores.size == 3) {
-            _totalScore.value += _submittedWordsAndScores.sumOf { it.second }
             _medal.value = GameLogic.getMedal(_totalScore.value)
+            saveTotalScore(_totalScore.value, _medal.value)
             updateStats()
             lockGame()
         }

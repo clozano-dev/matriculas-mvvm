@@ -161,6 +161,35 @@ fun HomeScreen(viewModel: MainViewModel) {
                 style = MaterialTheme.typography.bodyLarge,
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    if (viewModel.verifyWord(word) && viewModel.checkPreviousWord(word)) {
+                        viewModel.submitWord(word)
+                        word = ""
+                        wordsSubmitted += 1
+                    } else {
+                        Toast.makeText(
+                            context,
+                            if (!viewModel.verifyWord(word)) "La palabra no existe en el diccionario" else "La palabra ya ha sido enviada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                },
+                enabled = !isGameLocked,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.submit_word),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = stringResource(R.string.score, realTimeScore))
 
         } else {
             Text(
@@ -173,37 +202,6 @@ fun HomeScreen(viewModel: MainViewModel) {
                     .fillMaxWidth()
             )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = stringResource(R.string.score, realTimeScore))
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = {
-                if (viewModel.verifyWord(word) && viewModel.checkPreviousWord(word)) {
-                    viewModel.submitWord(word)
-                    word = ""
-                    wordsSubmitted += 1
-                } else {
-                    Toast.makeText(
-                        context,
-                        if (!viewModel.verifyWord(word)) "La palabra no existe en el diccionario" else "La palabra ya ha sido enviada",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            },
-            enabled = !isGameLocked,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            Text(
-                text = stringResource(R.string.submit_word),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
-
 
         Column(
             modifier = Modifier
@@ -223,6 +221,9 @@ fun HomeScreen(viewModel: MainViewModel) {
         }
 
         Text(text = stringResource(R.string.total_score, totalScore))
-        Text(text = stringResource(R.string.medal, medal))
+
+        if (isGameLocked) {
+            Text(text = stringResource(R.string.medal, medal))
+        }
     }
 }
