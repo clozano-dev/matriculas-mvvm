@@ -10,7 +10,6 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.clozanodev.matriculas.data.local.database.AppDatabase
 import com.clozanodev.matriculas.data.local.entities.UserStats
-import com.clozanodev.matriculas.workers.UpdateLicensePlateWorker
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
