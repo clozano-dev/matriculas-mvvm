@@ -101,6 +101,8 @@ dependencies {
     //workmanager
     implementation ("androidx.work:work-runtime-ktx:2.7.1")
 
+    //statusBar
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
