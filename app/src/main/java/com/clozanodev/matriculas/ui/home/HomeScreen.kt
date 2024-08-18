@@ -62,8 +62,7 @@ fun HomeScreen(viewModel: MainViewModel) {
     var containsNumbers by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.fetchCurrentLicensePlate(false)
-        viewModel.loadGameState()
+        viewModel.fetchCurrentLicensePlate()
     }
 
     LaunchedEffect(word) {
@@ -96,7 +95,7 @@ fun HomeScreen(viewModel: MainViewModel) {
             modifier = Modifier.fillMaxWidth(),
         )
 
-        MyPlate(text = "${licensePlate?.plate}")
+        MyPlate(text = licensePlate?.plate.orEmpty())
 
         if (!isGameLocked) {
             OutlinedTextField(

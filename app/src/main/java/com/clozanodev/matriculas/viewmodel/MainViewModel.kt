@@ -60,11 +60,19 @@ class MainViewModel @Inject constructor(
     private val sharedPreferences = appContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
     init {
-        getUserStats()
-        fetchCurrentLicensePlate(false)
         loadGameState()
+        /*fetchCurrentLicensePlate()*/
+        getUserStats()
         loadSubmittedWordAndScores()
         subscribeToDailyNotifications()
+    }
+
+    private fun saveLastPlate(plate: String) {
+        sharedPreferences.edit().putString("lastPlate", plate).apply()
+    }
+
+    private fun getLastPlate(): String? {
+        return sharedPreferences.getString("lastPlate", null)
     }
 
     private fun subscribeToDailyNotifications() {
@@ -85,6 +93,16 @@ class MainViewModel @Inject constructor(
         sharedPreferences.edit().putString("submittedWordsAndScores", json).apply()
     }
 
+    private fun resetSubmittedWordAndScores(){
+        _submittedWords.clear()
+        _submittedWordsList.clear()
+        _submittedWordsAndScores.clear()
+        _totalScore.value = 0
+        _medal.value = ""
+        _realTimeScore.value = 0
+        saveSubmittedWordAndScores()
+    }
+
     private fun loadSubmittedWordAndScores(){
         val json = sharedPreferences.getString("submittedWordsAndScores", null)
         if (json != null) {
@@ -94,16 +112,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun loadGameState() {
+    private fun loadGameState() {
         val isLocked = sharedPreferences.getBoolean("isGameLocked", false)
         _isGameLocked.value = isLocked
 
         if (!_isGameLocked.value) {
-            _submittedWords.clear()
-            _submittedWordsList.clear()
-            _totalScore.value = 0
-            _medal.value = ""
-            saveSubmittedWordAndScores()
+            resetSubmittedWordAndScores()
         } else {
             _totalScore.value = sharedPreferences.getInt("totalScore", 0)
             _medal.value = sharedPreferences.getString("medal", "") ?: ""
@@ -133,14 +147,19 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun fetchCurrentLicensePlate(forceUnlock: Boolean = true) {
+    fun fetchCurrentLicensePlate() {
         viewModelScope.launch {
             try {
                 _licensePlate.value = plateRepository.getLicensePlateByDate()
-                if (forceUnlock) {
+                val lastPlate = getLastPlate()
+                val currentPlate = _licensePlate.value?.plate
+                if (lastPlate != currentPlate) {
                     _isGameLocked.value = false
                     saveGameLockState(false)
+                    saveLastPlate(currentPlate ?: "")
+                    loadGameState()
                 }
+
             } catch (e: Exception) {
                 _insertStatus.value = "Error fetching license plate: ${e.message}"
             }

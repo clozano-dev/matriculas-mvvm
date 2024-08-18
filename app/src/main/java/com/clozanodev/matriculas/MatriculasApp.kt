@@ -21,17 +21,14 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class MatriculasApp : Application(), Configuration.Provider {
+class MatriculasApp : Application() {
 
 
 
     @Inject
-    lateinit var workerFactory: HiltWorkerFactory
-
     override fun onCreate() {
         super.onCreate()
 
-        setupDailyWork()
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val isDatabaseInitialized = sharedPreferences.getBoolean("is_Database_Initialized", false)
@@ -40,33 +37,6 @@ class MatriculasApp : Application(), Configuration.Provider {
             initializeDatabase()
             sharedPreferences.edit().putBoolean("is_Database_Initialized", true).apply()
         }
-    }
-
-    private fun setupDailyWork() {
-        val currentTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
-        val twoAmUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
-            set(Calendar.HOUR_OF_DAY, 3)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }
-
-        val initialDelay = if (twoAmUtc.timeInMillis < currentTime) {
-            twoAmUtc.add(Calendar.DAY_OF_YEAR, 1)
-            twoAmUtc.timeInMillis - currentTime
-        } else {
-            twoAmUtc.timeInMillis - currentTime
-        }
-
-        val dailyWorkRequest = PeriodicWorkRequestBuilder<UpdateLicensePlateWorker>(
-            24,
-            TimeUnit.HOURS
-        ).setInitialDelay(initialDelay, TimeUnit.MILLISECONDS).build()
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "UpdateLicensePlateWorker",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            dailyWorkRequest
-        )
     }
 
     private fun initializeDatabase() {
@@ -85,10 +55,5 @@ class MatriculasApp : Application(), Configuration.Provider {
             db.userStatsDao().insertUserStats(defaultUserStats)
         }
     }
-
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
 
 }
