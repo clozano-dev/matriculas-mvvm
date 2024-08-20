@@ -31,18 +31,12 @@ val regularFont = FontFamily(Font(R.font.roboto_regular))
 
 @Composable
 fun RulesScreen() {
-    val subtitleTextStyle = TextStyle(
-        fontSize = 24.sp,
-        fontWeight = FontWeight.Bold,
-        fontFamily = regularFont,
+    val subtitleTextStyle = MaterialTheme.typography.titleMedium.copy(
         color = MaterialTheme.colorScheme.primary,
-        textAlign = TextAlign.Start
+        textAlign = TextAlign.Center
     )
 
-    val bodyTextStyle = TextStyle(
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Normal,
-        fontFamily = regularFont,
+    val bodyTextStyle = MaterialTheme.typography.bodyLarge.copy(
         color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Start
     )
@@ -64,7 +58,8 @@ fun RulesScreen() {
         R.string.game_rules_total_score_description_4,
         R.string.game_rules_valid_words_title,
         R.string.game_rules_valid_word_description_1,
-        R.string.game_rules_valid_word_description_2
+        R.string.game_rules_valid_word_description_2,
+        R.string.game_rules_valid_word_description_3
     )
 
     val combinedItems = buildList {

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
@@ -23,11 +24,9 @@ val regularFontTable = FontFamily(Font(R.font.roboto_regular))
 
 @Composable
 fun MyLetterScores() {
-    val cellStyle = TextStyle(
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Normal,
-        fontFamily = regularFontTable,
-        color = MaterialTheme.colorScheme.primary
+    val cellStyle = MaterialTheme.typography.bodyLarge.copy(
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Start
     )
 
     val tableData = listOf(

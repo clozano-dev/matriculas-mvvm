@@ -82,7 +82,8 @@ fun StatisticsScreen(viewModel: MainViewModel) {
         )
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxSize()
         ) {
 
 

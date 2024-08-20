@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
 
 val MainFontFamily = FontFamily(
-    Font(R.font.plate_regular)
+    Font(R.font.roboto_regular)
 
 
 )
@@ -36,7 +36,7 @@ val Typography = Typography(
     titleMedium = TextStyle(
         fontFamily = MainFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
+        fontSize = 30.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     )

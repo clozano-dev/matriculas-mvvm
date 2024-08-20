@@ -41,12 +41,8 @@ fun ScoreCard(score: String, medal: String) {
     Card(
 
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
-        ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .wrapContentSize()
