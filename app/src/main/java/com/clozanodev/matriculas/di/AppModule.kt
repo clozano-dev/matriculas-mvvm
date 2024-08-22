@@ -1,6 +1,5 @@
 package com.clozanodev.matriculas.di
 
-import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides

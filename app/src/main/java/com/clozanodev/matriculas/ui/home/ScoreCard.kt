@@ -1,6 +1,5 @@
 package com.clozanodev.matriculas.ui.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

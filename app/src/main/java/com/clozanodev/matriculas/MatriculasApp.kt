@@ -2,21 +2,12 @@ package com.clozanodev.matriculas
 
 import android.app.Application
 import android.content.Context
-import androidx.work.Configuration
-import androidx.work.WorkerFactory
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.clozanodev.matriculas.data.local.database.AppDatabase
 import com.clozanodev.matriculas.data.local.entities.UserStats
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Calendar
-import java.util.TimeZone
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp

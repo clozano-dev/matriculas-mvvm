@@ -1,6 +1,5 @@
 package com.clozanodev.matriculas.ui.statistics
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,14 +18,29 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
+import com.clozanodev.matriculas.ui.theme.PlateFontFamily
 import com.clozanodev.matriculas.viewmodel.MainViewModel
 
 @Composable
 fun StatisticsScreen(viewModel: MainViewModel) {
     val userStats by viewModel.userStats.collectAsState()
+
+    val titleTextStyle = TextStyle(
+        fontFamily = PlateFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp,
+        shadow = Shadow(
+            color = Color.Gray,
+            offset = Offset(1f, 1f),
+            blurRadius = 2f
+        ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
+    )
 
     LaunchedEffect(Unit) {
         viewModel.refreshUserStats()
@@ -73,11 +87,7 @@ fun StatisticsScreen(viewModel: MainViewModel) {
 
         Text(
             text = stringResource(R.string.statistics_title),
-            style = MaterialTheme.typography.titleLarge.copy(
-                shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center
-            ),
+            style = titleTextStyle,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 

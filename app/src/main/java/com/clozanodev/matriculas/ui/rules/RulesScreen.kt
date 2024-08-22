@@ -17,17 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
-
-val regularFont = FontFamily(Font(R.font.roboto_regular))
-
-
+import com.clozanodev.matriculas.ui.theme.PlateFontFamily
 
 @Composable
 fun RulesScreen() {
@@ -40,6 +35,18 @@ fun RulesScreen() {
         color = MaterialTheme.colorScheme.primary,
         textAlign = TextAlign.Start
     )
+
+    val titleTextStyle = TextStyle(
+        fontFamily = PlateFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp,
+        shadow = Shadow(
+            color = Color.Gray,
+            offset = Offset(1f, 1f),
+            blurRadius = 2f
+        ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
+    )
+
 
     val rules = listOf(
         R.string.game_rules_description,
@@ -77,16 +84,10 @@ fun RulesScreen() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-/*
-        MyPlate(text = stringResource(R.string.game_rules_title))
-*/
+
         Text(
             text = stringResource(R.string.game_rules_title),
-            style = MaterialTheme.typography.titleLarge.copy(
-                shadow = Shadow(color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f),
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center
-            )
+            style = titleTextStyle
 
         )
         Spacer(modifier = Modifier.height(16.dp))

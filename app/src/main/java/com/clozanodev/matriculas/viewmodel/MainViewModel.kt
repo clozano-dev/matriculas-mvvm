@@ -1,7 +1,6 @@
 package com.clozanodev.matriculas.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clozanodev.matriculas.data.local.entities.UserStats
@@ -31,7 +30,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _insertStatus = MutableStateFlow<String?>(null)
-    val insertStatus: StateFlow<String?> get() = _insertStatus
 
     private val _userStats = MutableStateFlow<UserStats?>(null)
     val userStats: StateFlow<UserStats?> get() = _userStats
@@ -61,7 +59,6 @@ class MainViewModel @Inject constructor(
 
     init {
         loadGameState()
-        /*fetchCurrentLicensePlate()*/
         getUserStats()
         loadSubmittedWordAndScores()
         subscribeToDailyNotifications()

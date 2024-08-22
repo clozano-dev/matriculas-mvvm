@@ -30,6 +30,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
@@ -37,12 +39,14 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.clozanodev.matriculas.R
 import com.clozanodev.matriculas.game.containsAllLetters
 import com.clozanodev.matriculas.game.containsAllLettersInOrder
 import com.clozanodev.matriculas.game.containsNumbers
 import com.clozanodev.matriculas.viewmodel.MainViewModel
 import com.clozanodev.matriculas.ui.theme.Green
+import com.clozanodev.matriculas.ui.theme.PlateFontFamily
 import com.clozanodev.matriculas.ui.theme.Red
 
 @Composable
@@ -62,6 +66,17 @@ fun HomeScreen(viewModel: MainViewModel) {
     var containsAllLetters by remember { mutableStateOf(false) }
     var containsAllLettersInOrder by remember { mutableStateOf(false) }
     var containsNumbers by remember { mutableStateOf(false) }
+
+    val titleTextStyle = TextStyle(
+        fontFamily = PlateFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp,
+        shadow = Shadow(
+            color = Color.Gray, offset = Offset(1f, 1f), blurRadius = 2f
+        ),
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Center
+    )
 
     LaunchedEffect(Unit) {
         viewModel.fetchCurrentLicensePlate()
@@ -87,14 +102,8 @@ fun HomeScreen(viewModel: MainViewModel) {
 
 
         Text(
-            text = stringResource(R.string.plates),
-            style = MaterialTheme.typography.titleLarge.copy(
-                shadow = Shadow(
-                    color = androidx.compose.ui.graphics.Color.Gray,
-                    offset = Offset(1f, 1f),
-                    blurRadius = 2f
-                ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
-            ),
+            text = stringResource(R.string.plates_title),
+            style = titleTextStyle,
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -140,8 +149,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                enabled = !isGameLocked
+                    .padding(8.dp)
             )
 
             Text(
@@ -175,9 +183,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                },
-                enabled = !isGameLocked,
-                colors = ButtonDefaults.buttonColors(
+                }, colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
@@ -210,12 +216,6 @@ fun HomeScreen(viewModel: MainViewModel) {
             submittedWordsAndScores.forEach { (word, score) ->
 
                 WordsCard(word = word, score = score.toString())
-
-                /*Text(
-                    text = "$word: $score",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )*/
             }
         }
 

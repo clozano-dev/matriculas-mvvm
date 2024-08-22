@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">matriculas</string>
+    <string name="app_name">Matrículas - Juego diario de palabras</string>
     <string name="statistics">Estadísticas</string>
     <string name="home">Inicio</string>
     <string name="rules">Reglas</string>
@@ -25,10 +25,10 @@
     <string name="highest_score">Máxima puntuación</string>
     <string name="current_consecutive_gold">Días oro consecutivos actuales</string>
     <string name="max_consecutive_gold">Maxímo de días oro consecutivos</string>
-    <string name="statistics_title">Estadísticas</string>
+    <string name="statistics_title">E5TADÍST1C4S</string>
 
     <string name="info">Información</string>
-    <string name="game_rules_title">Reglas del juego</string>
+    <string name="game_rules_title">R3GL4S D3L JU3G0</string>
     <string name="game_rules_description">Bienvenido a MATRÍCULAS: JUEGO DIARIO DE PALABRAS. El objetivo del juego es obtener la máxima puntuación posible introduciendo tres palabras relacionadas con una matrícula, que cambiará cada día.</string>
     <string name="game_rules_score_title">Puntuación</string>
     <string name="game_rules_score_description">Cada día aparecerá una nueva matrícula y se sumará la puntuación total obtenida en las tres palabras según las letras de la palabra y los multiplicadores conseguidos. </string>
@@ -51,6 +51,7 @@
 
     <string name="notification_channel_id">Avisos diarios</string>
     <string name="plates">Matrículas</string>
+    <string name="plates_title">M4TR1CUL4S</string>
     <string name="return_tomorrow">Vuelve mañana para jugar con la siguiente matrícula</string>
     <string name="rule_1">La palabra contiene todas las letras</string>
     <string name="rule_2">La palabra contiene todas las letras en orden</string>

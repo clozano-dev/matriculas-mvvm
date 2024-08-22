@@ -4,7 +4,7 @@ import com.clozanodev.matriculas.data.remote.entities.LicensePlate
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
-class LicensePlateApi(private val firestore: FirebaseFirestore) {
+class LicensePlateApi(firestore: FirebaseFirestore) {
 
     private val platesCollection = firestore.collection("licensePlates")
 
@@ -16,10 +16,4 @@ class LicensePlateApi(private val firestore: FirebaseFirestore) {
             null
         }
     }
-
-    suspend fun getAllPlates(): List<LicensePlate> {
-        val snapshot = platesCollection.get().await()
-        return snapshot.documents.mapNotNull { it.toObject(LicensePlate::class.java) }
-    }
-
 }
