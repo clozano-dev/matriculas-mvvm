@@ -137,7 +137,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(8.dp),
                 enabled = !isGameLocked
             )
 
@@ -157,7 +157,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                 style = MaterialTheme.typography.bodyLarge,
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Button(
                 onClick = {
@@ -184,7 +184,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                 )
 
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(text = stringResource(R.string.score, realTimeScore))
 
         } else {
@@ -194,7 +194,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(8.dp)
                     .fillMaxWidth()
             )
         }
@@ -202,7 +202,7 @@ fun HomeScreen(viewModel: MainViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             submittedWordsAndScores.forEach { (word, score) ->
 

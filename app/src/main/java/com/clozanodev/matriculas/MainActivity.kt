@@ -11,7 +11,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.clozanodev.matriculas.ui.MainScreen
 import com.clozanodev.matriculas.ui.theme.MatriculasTheme
 import com.clozanodev.matriculas.viewmodel.MainViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -22,7 +31,11 @@ class MainActivity : ComponentActivity() {
         ) { isGranted: Boolean ->
             if (isGranted) {
             } else {
-                Toast.makeText(this, "Notificaciones deshabilitadas. Por favor, habilite las notificaciones en la configuración de la aplicación.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Notificaciones deshabilitadas. Por favor, habilite las notificaciones en la configuración de la aplicación.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 

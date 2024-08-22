@@ -40,9 +40,9 @@
     <string name="game_rules_multipliers_description_3">Si la palabra tiene el mismo número de letras que algún número de la matrícula, la puntuación se multiplica por dos tantas veces como veces esté repetido ese número.</string>
     <string name="game_rules_total_score_title">Puntuación total</string>
     <string name="game_rules_total_score_description_1">"En función de la puntuación total obtenida en las tres palabras, se otorgará una copa: "</string>
-    <string name="game_rules_total_score_description_2">" - Oro: 450 puntos o más."</string>
-    <string name="game_rules_total_score_description_3">" - Plata: 300 puntos o más."</string>
-    <string name="game_rules_total_score_description_4">" - Bronce: 150 puntos o más."</string>
+    <string name="game_rules_total_score_description_2">" - Oro: 400 puntos o más."</string>
+    <string name="game_rules_total_score_description_3">" - Plata: 200 puntos o más."</string>
+    <string name="game_rules_total_score_description_4">" - Bronce: 100 puntos o más."</string>
     <string name="game_rules_valid_words_title">Palabras no válidas</string>
     <string name="game_rules_valid_word_description_1">No se admiten tiempos verbales (ejemplo: \'vendrá\', \'jugaba\').</string>
     <string name="game_rules_valid_word_description_2">Las conjugaciones de verbos no son válidas (ejemplo: \'traerse\').</string>
