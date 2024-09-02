@@ -152,21 +152,36 @@ fun HomeScreen(viewModel: MainViewModel) {
                     .padding(8.dp)
             )
 
-            Text(
-                text = stringResource(R.string.rule_1),
-                color = if (containsAllLetters) Green else Red,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            Text(
-                text = stringResource(R.string.rule_2),
-                color = if (containsAllLettersInOrder) Green else Red,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            Text(
-                text = stringResource(R.string.rule_3),
-                color = if (containsNumbers) Green else Red,
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = stringResource(R.string.score, realTimeScore))
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Text(
+                    text = stringResource(R.string.rule_1),
+                    color = if (containsAllLetters) Green else Red,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = stringResource(R.string.rule_2),
+                    color = if (containsAllLettersInOrder) Green else Red,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = stringResource(R.string.rule_3),
+                    color = if (containsNumbers) Green else Red,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -193,8 +208,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                 )
 
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = stringResource(R.string.score, realTimeScore))
+
 
         } else {
             Text(
