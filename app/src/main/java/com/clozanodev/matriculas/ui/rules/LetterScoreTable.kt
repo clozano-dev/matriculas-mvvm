@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MyLetterScores() {
     val cellStyle = MaterialTheme.typography.bodyLarge.copy(
-        color = MaterialTheme.colorScheme.primary,
+        color = MaterialTheme.colorScheme.onSurface,
         textAlign = TextAlign.Start
     )
 

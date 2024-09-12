@@ -1,12 +1,20 @@
 package com.clozanodev.matriculas.ui.rules
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.TabRowDefaults.Divider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +36,12 @@ import com.clozanodev.matriculas.ui.theme.PlateFontFamily
 fun RulesScreen() {
     val subtitleTextStyle = MaterialTheme.typography.titleMedium.copy(
         color = MaterialTheme.colorScheme.primary,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.Bold
     )
 
     val bodyTextStyle = MaterialTheme.typography.bodyLarge.copy(
-        color = MaterialTheme.colorScheme.primary,
+        color = MaterialTheme.colorScheme.onSurface,
         textAlign = TextAlign.Start
     )
 
@@ -41,12 +50,13 @@ fun RulesScreen() {
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
         shadow = Shadow(
-            color = Color.Gray,
-            offset = Offset(1f, 1f),
-            blurRadius = 2f
-        ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
+            color = Color.Gray.copy(alpha = 0.5f),
+            offset = Offset(2f, 2f),
+            blurRadius = 8f
+        ),
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Center
     )
-
 
     val rules = listOf(
         R.string.game_rules_description,
@@ -81,23 +91,29 @@ fun RulesScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        // Título principal
         Text(
             text = stringResource(R.string.game_rules_title),
-            style = titleTextStyle
-
+            style = titleTextStyle,
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
 
+        // Reglas dentro de una LazyColumn
         LazyColumn(
-            modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Start
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.Start
         ) {
             items(combinedItems) { item ->
                 if (item == null) {
+                    // Composable personalizado para puntuaciones
                     MyLetterScores()
+                    Spacer(modifier = Modifier.height(16.dp))
                 } else {
                     val text = stringResource(id = item)
                     val style = when (item) {
@@ -109,18 +125,43 @@ fun RulesScreen() {
                         else -> bodyTextStyle
                     }
 
-                    val paddingModifier = if (style == subtitleTextStyle) {
-                        Modifier.padding(top = 16.dp, bottom = 2.dp)
+                    // Añadimos un ícono al lado de los títulos importantes
+                    if (style == subtitleTextStyle) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .padding(end = 8.dp)
+                            )
+                            Text(
+                                text = text,
+                                style = style
+                            )
+                        }
+                        Divider(
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
                     } else {
-                        Modifier.padding(4.dp)
+                        Text(
+                            text = text,
+                            style = style,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        )
                     }
-                    Text(
-                        text = text, style = style, modifier = paddingModifier
-                    )
                 }
             }
-
         }
-
     }
 }

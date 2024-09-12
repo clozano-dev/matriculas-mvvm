@@ -34,7 +34,7 @@ fun MyPlate(text: String) {
 
     Box(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(4.dp)
             .size(280.dp, 80.dp),
         contentAlignment = Alignment.Center
     ) {

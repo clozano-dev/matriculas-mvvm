@@ -1,5 +1,6 @@
 package com.clozanodev.matriculas.ui.statistics
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,16 +37,18 @@ fun StatisticsScreen(viewModel: MainViewModel) {
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
         shadow = Shadow(
-            color = Color.Gray,
-            offset = Offset(1f, 1f),
-            blurRadius = 2f
+            color = Color.Gray.copy(alpha = 0.5f),
+            offset = Offset(2f, 2f),
+            blurRadius = 6f
         ), color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center
     )
 
+    // Refrescar estadísticas
     LaunchedEffect(Unit) {
         viewModel.refreshUserStats()
     }
 
+    // Lista de estadísticas
     val statisticsList = listOf(
         Triple(
             stringResource(R.string.total_days_played),
@@ -81,22 +84,22 @@ fun StatisticsScreen(viewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(8.dp)
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        // Título principal
         Text(
             text = stringResource(R.string.statistics_title),
             style = titleTextStyle,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         )
 
+        // Lista de estadísticas
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-
-
             items(statisticsList) { (title, value, iconResId) ->
                 StatisticsCard(
                     title = title, value = value, iconResId = iconResId

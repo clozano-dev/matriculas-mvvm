@@ -1,18 +1,32 @@
 package com.clozanodev.matriculas.ui.home
 
 import android.widget.Toast
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
@@ -25,10 +39,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -67,6 +86,9 @@ fun HomeScreen(viewModel: MainViewModel) {
     var containsAllLettersInOrder by remember { mutableStateOf(false) }
     var containsNumbers by remember { mutableStateOf(false) }
 
+    var isFocused by remember { mutableStateOf(false) }
+    val focusRequest = remember { FocusRequester() }
+
     val titleTextStyle = TextStyle(
         fontFamily = PlateFontFamily,
         fontWeight = FontWeight.Bold,
@@ -95,7 +117,7 @@ fun HomeScreen(viewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(8.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -104,41 +126,47 @@ fun HomeScreen(viewModel: MainViewModel) {
         Text(
             text = stringResource(R.string.plates_title),
             style = titleTextStyle,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
         )
 
         MyPlate(text = licensePlate?.plate.orEmpty())
 
         if (!isGameLocked) {
-            OutlinedTextField(
-                value = word,
-                onValueChange = { input ->
-                    if (input.all { it.isLetter() }) {
-                        word = input.uppercase()
-                    }
-                },
-                label = { Text(stringResource(R.string.insert_word)) },
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Characters,
-                    keyboardType = KeyboardType.Text
-                ),
-                visualTransformation = { text ->
-                    TransformedText(
-                        text = text.toUpperCase(), offsetMapping = OffsetMapping.Identity
-                    )
+            OutlinedTextField(value = word, onValueChange = { input ->
+                if (input.all { it.isLetter() }) {
+                    word = input.uppercase()
+                }
+            }, label = {
+                if (!isFocused) {
+                    Text(stringResource(R.string.insert_word))
+                }
+            }, maxLines = 1, keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Characters,
+                keyboardType = KeyboardType.Text
+            ), textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center,
+                fontFamily = PlateFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp
+            ), visualTransformation = { text ->
+                TransformedText(
+                    text = text.toUpperCase(), offsetMapping = OffsetMapping.Identity
+                )
 
-                },
+            },
 
 
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.colorScheme.primary,
                     unfocusedTextColor = MaterialTheme.colorScheme.primary,
                     focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                     cursorColor = MaterialTheme.colorScheme.primary,
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                    unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
                     focusedPlaceholderColor = MaterialTheme.colorScheme.primary,
                     unfocusedPlaceholderColor = MaterialTheme.colorScheme.primary,
                     focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
@@ -150,37 +178,161 @@ fun HomeScreen(viewModel: MainViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
+                    .padding(horizontal = 8.dp)
+                    .focusRequester(focusRequest)
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    },
+                shape = MaterialTheme.shapes.medium
             )
 
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = stringResource(R.string.score, realTimeScore))
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+            var rulesCardHeight by remember { mutableStateOf(0) }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Text(
-                    text = stringResource(R.string.rule_1),
-                    color = if (containsAllLetters) Green else Red,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = stringResource(R.string.rule_2),
-                    color = if (containsAllLettersInOrder) Green else Red,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = stringResource(R.string.rule_3),
-                    color = if (containsNumbers) Green else Red,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Card(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
+                        .onGloballyPositioned { coordinates ->
+                            rulesCardHeight = coordinates.size.height
+                        },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+
+                        val rule1Color by animateColorAsState(
+                            targetValue = if (containsAllLetters) Green else Red,
+                            animationSpec = tween(durationMillis = 500)
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = if (containsAllLetters) Icons.Default.Check else Icons.Default.Close,
+                                contentDescription = null,
+                                tint = rule1Color,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Todas las letras",
+                                color = rule1Color,
+                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        val rule2Color by animateColorAsState(
+                            targetValue = if (containsAllLettersInOrder) Green else Red,
+                            animationSpec = tween(durationMillis = 500)
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = if (containsAllLettersInOrder) Icons.Default.Check else Icons.Default.Close,
+                                contentDescription = null,
+                                tint = rule2Color,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Letras en orden",
+                                color = rule2Color,
+                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        val rule3Color by animateColorAsState(
+                            targetValue = if (containsNumbers) Green else Red,
+                            animationSpec = tween(durationMillis = 500)
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = if (containsNumbers) Icons.Default.Check else Icons.Default.Close,
+                                contentDescription = null,
+                                tint = rule3Color,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Número de letras",
+                                color = rule3Color,
+                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+
+                Card(
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .padding(start = 8.dp)
+                        .height(with(LocalDensity.current) { rulesCardHeight.toDp() }),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        Text(
+                            text = realTimeScore.toString(),
+                            style = TextStyle(
+                                fontSize = 40.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = PlateFontFamily,
+                                color = MaterialTheme.colorScheme.primary,
+                                shadow = Shadow(
+                                    color = Color.Black.copy(alpha = 0.2f),
+                                    offset = Offset(4f, 4f),
+                                    blurRadius = 8f
+                                )
+                            ),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -200,13 +352,16 @@ fun HomeScreen(viewModel: MainViewModel) {
                     }
                 }, colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
-                )
+                ), shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
                     text = stringResource(R.string.submit_word),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    ),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
-
             }
 
 
