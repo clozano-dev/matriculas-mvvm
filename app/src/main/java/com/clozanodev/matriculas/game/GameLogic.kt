@@ -6,9 +6,9 @@ object GameLogic {
 
         val letterScore = mapOf(
             'A' to 1, 'B' to 4, 'C' to 2, 'D' to 2, 'E' to 1, 'F' to 6, 'G' to 4,
-            'H' to 4, 'I' to 1, 'J' to 8, 'K' to 10, 'L' to 2, 'M' to 3, 'N' to 1,
-            'Ñ' to 10, 'O' to 1, 'P' to 3, 'Q' to 6, 'R' to 1, 'S' to 1, 'T' to 2,
-            'U' to 3, 'V' to 6, 'W' to 10, 'X' to 10, 'Y' to 6, 'Z' to 8
+            'H' to 6, 'I' to 1, 'J' to 8, 'K' to 10, 'L' to 2, 'M' to 3, 'N' to 1,
+            'Ñ' to 10, 'O' to 1, 'P' to 3, 'Q' to 8, 'R' to 1, 'S' to 2, 'T' to 2,
+            'U' to 3, 'V' to 6, 'W' to 10, 'X' to 10, 'Y' to 10, 'Z' to 8
         )
 
         val letters = licensePlate.substring(4).uppercase()

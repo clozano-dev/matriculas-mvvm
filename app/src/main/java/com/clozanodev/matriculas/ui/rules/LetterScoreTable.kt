@@ -25,9 +25,9 @@ fun MyLetterScores() {
         listOf("A = 1", "B = 4", "C = 2", "D = 2", "E = 1"),
         listOf("F = 6", "G = 4", "H = 6", "I = 1", "J = 8"),
         listOf("K = 10", "L = 2", "M = 3", "N = 1", "Ñ = 10"),
-        listOf("O = 1", "P = 3", "Q = 6", "R = 1", "S = 1"),
+        listOf("O = 1", "P = 3", "Q = 8", "R = 1", "S = 2"),
         listOf("T = 2", "U = 3", "V = 6", "W = 10", "X = 10"),
-        listOf("Y = 6", "Z = 8")
+        listOf("Y = 10", "Z = 8")
     )
 
     Column(

@@ -183,6 +183,7 @@ class MainViewModel @Inject constructor(
         val score = GameLogic.calculateScore(currentLicensePlate, word)
 
         _submittedWordsAndScores.add(word to score)
+        _submittedWordsList.add(word)
         saveSubmittedWordAndScores()
 
         _totalScore.value += score
